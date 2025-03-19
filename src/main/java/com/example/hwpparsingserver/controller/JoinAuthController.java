@@ -18,7 +18,6 @@ public class JoinAuthController {
 
     @PostMapping("/join")
     public String registerUser(@RequestBody UserJoinDomain userDomain) {
-        System.out.println("!!!!!!");
         return userJoinService.registerUser(userDomain);
     }
 }
