@@ -14,6 +14,12 @@ public class UserService {
     // 사용자 인증
     public boolean authUserWithJPA(String userId, String userPw) {
         UserDomain foundUser = jpaLoginRepository.authUser(userId, userPw);
-        return foundUser != null;
+        System.out.println(foundUser);
+
+        if (foundUser == null) {
+            return false;
+        }else{
+            return true;
+        }
     }
 }

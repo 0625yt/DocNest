@@ -3,7 +3,10 @@ package com.example.hwpparsingserver.controller;
 import com.example.hwpparsingserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +36,7 @@ public class AuthController {
             response.put("status", "success");
             response.put("message", "Authentication successful");
         } else {
+            System.out.println("fail");
             response.put("status", "failure");
             response.put("message", "Authentication failed");
         }

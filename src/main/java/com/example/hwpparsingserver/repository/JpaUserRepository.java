@@ -1,6 +1,5 @@
 package com.example.hwpparsingserver.repository;
 
-import com.example.hwpparsingserver.domain.UserDomain;
 import com.example.hwpparsingserver.domain.UserJoinDomain;
 import org.springframework.data.jpa.repository.JpaRepository;
 

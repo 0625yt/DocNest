@@ -49,6 +49,7 @@
             <artifactId>jjwt-api</artifactId>
             <version>0.11.5</version>
         </dependency>
+
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-impl</artifactId>
@@ -88,7 +89,6 @@
             <artifactId>mybatis</artifactId>
             <version>3.5.11</version>
         </dependency>
-
 
         <dependency>
             <groupId>com.oracle.database.jdbc</groupId>
