@@ -2,6 +2,7 @@ package com.example.hwpparsingserver.domain.folderinfo;
 
 import com.example.hwpparsingserver.domain.UserDomain;
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
 @Entity
