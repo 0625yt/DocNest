@@ -4,16 +4,12 @@ import com.example.hwpparsingserver.domain.folderinfo.Folder;
 import com.example.hwpparsingserver.domain.folderinfo.FolderInfoDomain;
 import com.example.hwpparsingserver.service.folderinfo.FolderService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/folders")
-
 public class FolderController {
 
     private final FolderService folderService;
@@ -33,10 +29,10 @@ public class FolderController {
         return folderService.selectFolder(folderInfo);
     }
 
-    @PostMapping("/delete")
-    public ResponseEntity<String> deleteFolder(@RequestBody FolderInfoDomain folderInfo) {
-        return folderService.deleteFolder(folderInfo);
+    // ✅ RESTful DELETE 매핑 추가
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteFolder(@PathVariable Long id) {
+        folderService.deleteFolderById(id);
+        return ResponseEntity.ok("삭제 완료");
     }
-
-
 }
