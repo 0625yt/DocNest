@@ -1,75 +1,52 @@
 // src/main/java/.../domain/document/DocumentDomain.java
 package com.example.hwpparsingserver.domain;
-
-import com.example.hwpparsingserver.domain.folderinfo.Folder;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.time.LocalDateTime;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "DOCUMENT")
 public class DocumentDomain {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // 시퀀스 사용 시 적절히 변경
+    @Column(name = "ID")
     private Long id;
 
-    // 폴더 외래키
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "FOLDER_ID", nullable = false)
-    private Folder folder;
+    @Column(name = "FOLDER_ID", nullable = false)
+    private Long folderId;
 
-    @Column(name = "NAME", nullable = false)
-    private String name;
+    @Column(name = "USER_ID")
+    private String userId;
 
-    // 실제 파일 절대경로 or 상대경로
-    @Column(name = "PATH", nullable = false)
-    private String path;
+    @Column(name = "DOC_NAME")
+    private String docName;
 
-    @Column(name = "SIZE")
-    private Long size;
+    @Column(name = "FILE_PATH")
+    private String filePath;
+
+    @Column(name = "DOC_TYPE")
+    private String docType;
+
+    @Column(name = "DOC_SIZE")
+    private Long docSize;
+
+    @Column(name = "DESCRIPTION")
+    private String description;
+
+    @Column(name = "CREATED_AT")
+    private LocalDateTime createdAt;
+
+    @Column(name = "UPDATED_AT")
+    private LocalDateTime updatedAt;
 
     @Column(name = "UPLOADED_AT")
-    private LocalDateTime uploadedAt = LocalDateTime.now();
+    private LocalDateTime uploadedAt;
 
-    public LocalDateTime getUploadedAt() {
-        return uploadedAt;
-    }
+    // --- Getters and Setters ---
 
-    public void setUploadedAt(LocalDateTime uploadedAt) {
-        this.uploadedAt = uploadedAt;
-    }
-
-    public Long getSize() {
-        return size;
-    }
-
-    public void setSize(Long size) {
-        this.size = size;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Folder getFolder() {
-        return folder;
-    }
-
-    public void setFolder(Folder folder) {
-        this.folder = folder;
-    }
-
-    // getter/setter ...
 }

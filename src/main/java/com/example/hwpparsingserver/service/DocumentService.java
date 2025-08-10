@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -22,7 +23,12 @@ public class DocumentService {
         this.folderRepository = folderRepository;
     }
 
-    public DocumentDomain upload(Long folderId, MultipartFile file, String baseDir) throws Exception {
+    public DocumentDomain getOne(Long docId) {
+        return documentRepository.findById(docId)
+                .orElseThrow(() -> new IllegalArgumentException("문서를 찾을 수 없습니다. id=" + docId));
+    }
+
+    public DocumentDomain upload(Long folderId, MultipartFile file, String baseDir, String userId) throws Exception {
         Folder folder = folderRepository.findById(folderId)
                 .orElseThrow(() -> new IllegalArgumentException("Folder not found: " + folderId));
 
@@ -33,10 +39,14 @@ public class DocumentService {
         file.transferTo(saved);
 
         DocumentDomain doc = new DocumentDomain();
-        doc.setFolder(folder);
-        doc.setName(file.getOriginalFilename());
-        doc.setPath(saved.getAbsolutePath());
-        doc.setSize(file.getSize());
+        doc.setFolderId(folderId);
+        doc.setUserId(userId);
+        doc.setDocSize(file.getSize());
+        doc.setDocName(file.getOriginalFilename());
+        doc.setFilePath(saved.getAbsolutePath());
+        doc.setDocSize(file.getSize());
+        doc.setUploadedAt(LocalDateTime.now());
+
         return documentRepository.save(doc);
     }
 
@@ -48,14 +58,14 @@ public class DocumentService {
         DocumentDomain d = documentRepository.findById(docId)
                 .orElseThrow(() -> new IllegalArgumentException("Document not found: " + docId));
         // 실제 파일 삭제
-        try { Files.deleteIfExists(new File(d.getPath()).toPath()); } catch (Exception ignore) {}
+        try { Files.deleteIfExists(new File(d.getFilePath()).toPath()); } catch (Exception ignore) {}
         documentRepository.delete(d);
     }
 
     public void deleteAllInFolder(Long folderId) {
         // 파일 삭제 + 레코드 삭제
         documentRepository.findByFolderId(folderId).forEach(d -> {
-            try { Files.deleteIfExists(new File(d.getPath()).toPath()); } catch (Exception ignore) {}
+            try { Files.deleteIfExists(new File(d.getFilePath()).toPath()); } catch (Exception ignore) {}
         });
         documentRepository.deleteByFolderId(folderId);
     }
