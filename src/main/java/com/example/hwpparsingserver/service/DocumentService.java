@@ -1,56 +1,62 @@
+// src/main/java/.../service/document/DocumentService.java
 package com.example.hwpparsingserver.service;
 
 import com.example.hwpparsingserver.domain.DocumentDomain;
+import com.example.hwpparsingserver.domain.folderinfo.Folder;
 import com.example.hwpparsingserver.repository.DocumentRepository;
-import org.springframework.http.ResponseEntity;
+import com.example.hwpparsingserver.repository.folderinfo.FolderRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
 
 @Service
 public class DocumentService {
-
     private final DocumentRepository documentRepository;
+    private final FolderRepository folderRepository;
 
-    public DocumentService(DocumentRepository documentRepository) {
+    public DocumentService(DocumentRepository documentRepository, FolderRepository folderRepository) {
         this.documentRepository = documentRepository;
+        this.folderRepository = folderRepository;
     }
 
-    public void saveDocument(MultipartFile file, String folderId, String fileName,
-                             long fileSize, String fileType, String userId) throws IOException {
-        // 1. 파일 저장
-        String uploadDir = "/Users/hong-yuntaeg/개발/uploaded-files/";
-        File directory = new File(uploadDir);
-        if (!directory.exists()) {
-            directory.mkdirs();
-        }
+    public DocumentDomain upload(Long folderId, MultipartFile file, String baseDir) throws Exception {
+        Folder folder = folderRepository.findById(folderId)
+                .orElseThrow(() -> new IllegalArgumentException("Folder not found: " + folderId));
 
-        String fullPath = uploadDir + fileName;
-        File uploadedFile = new File(fullPath);
-        file.transferTo(uploadedFile);
+        File dir = new File(baseDir);
+        if (!dir.exists()) dir.mkdirs();
 
-        // 2. DB 저장
-        DocumentDomain document = new DocumentDomain();
-        document.setFileName(fileName);
-        document.setFilePath(fullPath);
-        document.setFileSize(fileSize);
-        document.setFileType(fileType);
-        document.setFolderId(folderId);
-        document.setUserId(userId);
+        File saved = new File(dir, file.getOriginalFilename());
+        file.transferTo(saved);
 
-        documentRepository.save(document);
+        DocumentDomain doc = new DocumentDomain();
+        doc.setFolder(folder);
+        doc.setName(file.getOriginalFilename());
+        doc.setPath(saved.getAbsolutePath());
+        doc.setSize(file.getSize());
+        return documentRepository.save(doc);
     }
 
-    public File getDocument(String folderId) {
+    public List<DocumentDomain> list(Long folderId) {
+        return documentRepository.findByFolderId(folderId);
+    }
 
-        String filePath = documentRepository.findByFolderId(folderId).getFilePath();
-        File file = new File(filePath);
-        System.out.println("file = " + file );
-        System.out.println("filePath = " + filePath);
-        System.out.println("folderId = " + folderId);
+    public void delete(Long docId) throws Exception {
+        DocumentDomain d = documentRepository.findById(docId)
+                .orElseThrow(() -> new IllegalArgumentException("Document not found: " + docId));
+        // 실제 파일 삭제
+        try { Files.deleteIfExists(new File(d.getPath()).toPath()); } catch (Exception ignore) {}
+        documentRepository.delete(d);
+    }
 
-        return file;
+    public void deleteAllInFolder(Long folderId) {
+        // 파일 삭제 + 레코드 삭제
+        documentRepository.findByFolderId(folderId).forEach(d -> {
+            try { Files.deleteIfExists(new File(d.getPath()).toPath()); } catch (Exception ignore) {}
+        });
+        documentRepository.deleteByFolderId(folderId);
     }
 }

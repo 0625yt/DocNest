@@ -64,7 +64,7 @@ public class FolderService {
     }
 
 
-    public void deleteFolderById(Long id) {
+    public void deleteById(Long id) {
         folderRepository.deleteById(id);
     }
 }

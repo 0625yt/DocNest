@@ -1,100 +1,75 @@
+// src/main/java/.../domain/document/DocumentDomain.java
 package com.example.hwpparsingserver.domain;
 
+import com.example.hwpparsingserver.domain.folderinfo.Folder;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "document")
+@Table(name = "DOCUMENT")
 public class DocumentDomain {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "DOC_NAME")
-    private String fileName;
+    // 폴더 외래키
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FOLDER_ID", nullable = false)
+    private Folder folder;
 
-    @Column(name = "FILE_PATH")
-    private String filePath;
+    @Column(name = "NAME", nullable = false)
+    private String name;
 
-    @Column(name = "DOC_SIZE")
-    private long fileSize;
+    // 실제 파일 절대경로 or 상대경로
+    @Column(name = "PATH", nullable = false)
+    private String path;
 
-    @Column(name = "DOC_TYPE")
-    private String fileType;
+    @Column(name = "SIZE")
+    private Long size;
 
-    @Column(name = "FOLDER_ID")
-    private String folderId;
+    @Column(name = "UPLOADED_AT")
+    private LocalDateTime uploadedAt = LocalDateTime.now();
 
-    @Column(name = "USER_ID")
-    private String userId;
-
-    @Column(name = "CREATED_AT")
-    private LocalDateTime createdAt = LocalDateTime.now();
-
-    // === Getter / Setter ===
-
-    public Long getId() {
-        return id;
+    public LocalDateTime getUploadedAt() {
+        return uploadedAt;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUploadedAt(LocalDateTime uploadedAt) {
+        this.uploadedAt = uploadedAt;
     }
 
-    public String getFileName() {
-        return fileName;
+    public Long getSize() {
+        return size;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public void setSize(Long size) {
+        this.size = size;
     }
 
-    public String getFilePath() {
-        return filePath;
+    public String getPath() {
+        return path;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setPath(String path) {
+        this.path = path;
     }
 
-    public long getFileSize() {
-        return fileSize;
+    public String getName() {
+        return name;
     }
 
-    public void setFileSize(long fileSize) {
-        this.fileSize = fileSize;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getFileType() {
-        return fileType;
+    public Folder getFolder() {
+        return folder;
     }
 
-    public void setFileType(String fileType) {
-        this.fileType = fileType;
+    public void setFolder(Folder folder) {
+        this.folder = folder;
     }
 
-    public String getFolderId() {
-        return folderId;
-    }
-
-    public void setFolderId(String folderId) {
-        this.folderId = folderId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
+    // getter/setter ...
 }
