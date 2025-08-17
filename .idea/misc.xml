@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id>JUnit</id>
+          </State>
+          <State>
+            <id>JVM 언어</id>
+          </State>
+          <State>
+            <id>Java</id>
+          </State>
+          <State>
+            <id>Java 7Java 언어 수준 마이그레이션 지원Java</id>
+          </State>
+          <State>
+            <id>Java 언어 수준 마이그레이션 지원Java</id>
+          </State>
+          <State>
+            <id>Java 언어 수준 문제Java</id>
+          </State>
+          <State>
+            <id>가져오기Java</id>
+          </State>
+          <State>
+            <id>국제화Java</id>
+          </State>
+          <State>
+            <id>로깅JVM 언어</id>
+          </State>
+          <State>
+            <id>성능Java</id>
+          </State>
+          <State>
+            <id>스레딩 문제Java</id>
+          </State>
+          <State>
+            <id>이식성Java</id>
+          </State>
+          <State>
+            <id>임베디드성능Java</id>
+          </State>
+          <State>
+            <id>장황하거나 중복 코드 구문Java</id>
+          </State>
+          <State>
+            <id>초기화Java</id>
+          </State>
+          <State>
+            <id>테스트 프레임워크JVM 언어</id>
+          </State>
+        </expanded-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="homebrew-21" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>
