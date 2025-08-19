@@ -16,7 +16,7 @@ public class FileUploadService {
 
         try {
             // 파일 저장 경로 설정
-            String uploadDir = "C:\\Temp\\" + folder;
+            String uploadDir = "/Users/hong-yuntaeg/dev/temp/" + folder;
             File dir = new File(uploadDir);
             if (!dir.exists()) {
                 dir.mkdirs(); // 폴더가 없으면 생성

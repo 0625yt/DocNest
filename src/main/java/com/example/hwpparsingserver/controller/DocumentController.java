@@ -22,7 +22,7 @@ import java.util.List;
 public class DocumentController {
     private final DocumentService documentService;
 
-    private static final String BASE_DIR = "C:/Temp/uploaded-files";
+    private static final String BASE_DIR = "/Users/hong-yuntaeg/dev/temp/uploaded-files";
 
     public DocumentController(DocumentService documentService, DocumentRepository documentRepository) {
         this.documentService = documentService;

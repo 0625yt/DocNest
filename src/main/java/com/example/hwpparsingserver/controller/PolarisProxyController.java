@@ -25,7 +25,7 @@ public class PolarisProxyController {
         }
 
         try {
-            String uploadDir = "C:/Temp/uploaded-files/";
+            String uploadDir = "/Users/hong-yuntaeg/dev/temp/uploaded-files/";
             File directory = new File(uploadDir);
             if (!directory.exists()) {
                 directory.mkdirs();
@@ -70,7 +70,7 @@ public class PolarisProxyController {
 
     @GetMapping("/files")
     public ResponseEntity<List<Map<String, Object>>> listFiles() {
-        String uploadDir = "C:/Temp/uploaded-files/";
+        String uploadDir = "/Users/hong-yuntaeg/dev/temp/uploaded-files/";
         File directory = new File(uploadDir);
         if (!directory.exists() || !directory.isDirectory()) {
             return ResponseEntity.ok(Collections.emptyList());
@@ -99,7 +99,7 @@ public class PolarisProxyController {
             // URL 인코딩되어 들어오므로 디코딩 (선택)
             String filename = java.net.URLDecoder.decode(filenameEncoded, java.nio.charset.StandardCharsets.UTF_8);
 
-            String uploadDir = "C:/Temp/uploaded-files/";
+            String uploadDir = "/Users/hong-yuntaeg/dev/temp/uploaded-files/";
             File file = new File(uploadDir + filename);
             if (!file.exists() || !file.isFile()) {
                 return ResponseEntity.status(404).body("File not found");
